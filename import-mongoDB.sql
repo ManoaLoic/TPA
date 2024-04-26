@@ -7,9 +7,9 @@
 -- importer le fichier Clients_0.csv , Clients_0.csv et Immatriculations.csv dans le dossier
 
 -- CREATION DE LA BASE DE DONNEE ET IMPORTATION DES DONNEES DANS MONGO
-MYTPHOME=/vagrant/TPA/data
+MYTPHOME=/vagrant/TPA
 -- importation des données d'immatriculation
-[vagrant@oracle-21c-vagrant ~]$ mongoimport --db datatpa --collection M2_DMA_Immatriculations --type csv --headerline --drop --file $MYTPHOME/Immatriculations.csv
+[vagrant@oracle-21c-vagrant ~]$ mongoimport --db datatpa --collection M2_DMA_Immatriculations --type csv --headerline --drop --file $MYTPHOME/data/Immatriculations.csv
 
 --VERIFICATION DES DONNEES 
 -- connection à mongo
