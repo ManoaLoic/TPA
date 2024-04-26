@@ -12,7 +12,7 @@
 
 -- IMPORTATION DES FICHIERS CSV 
 -- importer le fichier Marketing.csv et CO2.csv dans le dossier  tpa/data
-[vagrant@oracle-21c-vagrant ~]$MYTPHOME=/vagrant/tpa/data
+[vagrant@oracle-21c-vagrant ~]$MYTPHOME=/vagrant/TPA/data
 
 -- ajout de  Marketing.csv DANS HDFS
 -- Création d'une directorie hadoop
