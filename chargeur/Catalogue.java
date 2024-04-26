@@ -36,7 +36,7 @@ import java.util.List;
 
 public class Catalogue {
 	private static final String MY_TP_PATH = "/vagrant";
-	private static final String AUTOMOBILE_FOLDER = "/Delivrance_TPA/TPA";
+	private static final String AUTOMOBILE_FOLDER = "/TPA";
 
 	private final KVStore store;
 	private final String tabCatalogue = "CATALOGUE";
