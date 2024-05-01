@@ -18,7 +18,6 @@ import oracle.kv.table.TableIterator;
 import oracle.kv.table.EnumValue;
 import java.io.File;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,25 +27,24 @@ import java.io.PrintWriter;
 
 import java.util.StringTokenizer;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
- * Cette classe va servir à importer le fichier Catalogue.CSV dans Kv Store
+ * Cette classe va servir à importer le fichier Marketing.CSV dans Kv Store
  */
 
-public class Catalogue {
+public class Marketing {
 	private static final String MY_TP_PATH = "/vagrant";
 	private static final String AUTOMOBILE_FOLDER = "/TPA";
 
 	private final KVStore store;
-	private final String tabCatalogue = "CATALOGUE";
+	private final String tabMarketing = "MARKETING";
 
 	public static void main(String args[]) {
 		try {
-			Catalogue arb = new Catalogue(args);
-			arb.dropTableCatalogue();
-			arb.createTableCatalogue();
-			arb.loadClientCatalogueFromFile(MY_TP_PATH + AUTOMOBILE_FOLDER + "/data/Catalogue.csv");
+			Marketing arb = new Marketing(args);
+			arb.dropTableMarketing();
+			arb.createTableMarketing();
+			arb.loadClientMarketingFromFile(MY_TP_PATH + AUTOMOBILE_FOLDER + "/data/Marketing.csv");
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}
@@ -55,7 +53,7 @@ public class Catalogue {
 	/**
 	 * Parses command line args and opens the KVStore.
 	 */
-	Catalogue(String[] argv) {
+	Marketing(String[] argv) {
 
 		String storeName = "kvstore";
 		String hostName = "localhost";
@@ -67,33 +65,30 @@ public class Catalogue {
 	}
 
 	/**
-	 * Méthode de suppression de la table Catalogue.
+	 * Méthode de suppression de la table Marketing.
 	 */
-	public void dropTableCatalogue() {
+	public void dropTableMarketing() {
 		String statement = null;
 
-		statement = "drop table " + tabCatalogue;
+		statement = "drop table " + tabMarketing;
 		executeDDL(statement);
 	}
 
 	/**
-	 * Méthode de création de la table client.
+	 * Méthode de création de la table Marketing.
 	 */
 
-	public void createTableCatalogue() {
+	public void createTableMarketing() {
 		String statement = null;
-		statement = "create table " + tabCatalogue + " ("
-				+ "CatalogueId INTEGER,"
-				+ "Marque STRING,"
-				+ "NOM STRING,"
-				+ "Puissance INTEGER,"
-				+ "Longueur STRING,"
-				+ "NbPlaces INTEGER,"
-				+ "NbPortes INTEGER,"
-				+ "Couleur STRING,"
-				+ "Occasion BOOLEAN,"
-				+ "Prix INTEGER,"
-				+ "PRIMARY KEY(CatalogueId))";
+		statement = "Create table " + tabMarketing + "("
+				+ "MARKETINGID INTEGER,"
+				+ "AGE INTEGER,"
+				+ "SEXE STRING,"
+				+ "TAUX INTEGER,"
+				+ "SITUATIONFAMILIALE STRING,"
+				+ "NBENFANTSACHARGE INTEGER,"
+				+ "VOITURE2 BOOLEAN,"
+				+ "PRIMARY KEY (MARKETINGID))";
 		executeDDL(statement);
 	}
 
@@ -152,32 +147,29 @@ public class Catalogue {
 	}
 
 	/**
-	 * Cette méthode insère une nouvelle ligne dans la table CATALOGUE
+	 * Cette méthode insère une nouvelle ligne dans la table marketing
 	 */
 
-	private void insertACatalogueRow(int catalogueId, String Marque, String NOM, int Puissance, String Longueur, int NbPlaces,
-			int NbPortes, String Couleur, boolean Occasion, int Prix) {
+	private void insertAMarketingRow(int marketingId, int age, String sexe, int taux, String situationFamiliale,
+			int nbEnfantsAcharge, boolean voiture2) {
 		StatementResult result = null;
 		String statement = null;
 		System.out.println(
-				"********************************** Dans : insertACatalogueRow *********************************");
+				"********************************** Dans : insertAMarketingRow *********************************");
 
 		try {
 
 			TableAPI tableH = store.getTableAPI();
-			Table tableCriteres = tableH.getTable(tabCatalogue);
+			Table tableCriteres = tableH.getTable(tabMarketing);
 			Row critereRow = tableCriteres.createRow();
 
-			critereRow.put("catalogueId", catalogueId);
-			critereRow.put("Marque", Marque);
-			critereRow.put("NOM", NOM);
-			critereRow.put("Puissance", Puissance);
-			critereRow.put("Longueur", Longueur);
-			critereRow.put("NbPlaces", NbPlaces);
-			critereRow.put("NbPortes", NbPortes);
-			critereRow.put("Couleur", Couleur);
-			critereRow.put("Occasion", Occasion);
-			critereRow.put("Prix", Prix);
+			critereRow.put("MARKETINGID", marketingId);
+			critereRow.put("age", age);
+			critereRow.put("sexe", sexe);
+			critereRow.put("taux", taux);
+			critereRow.put("situationFamiliale", situationFamiliale);
+			critereRow.put("nbEnfantsAcharge", nbEnfantsAcharge);
+			critereRow.put("VOITURE2", voiture2);
 
 			tableH.put(critereRow, null, null);
 		} catch (IllegalArgumentException e) {
@@ -189,52 +181,49 @@ public class Catalogue {
 	}
 
 	/**
-	 * void loadClientCatalogueFromFile(String catalogueDataFileName)
+	 * void loadClientMarketingFromFile(String MarketingDataFileName)
 	 * cette methodes permet de charger les véhicules depuis le fichier
-	 * appelé Catalogue.csv
+	 * appelé Marketing.csv
 	 */
-	void loadClientCatalogueFromFile(String catalogueDataFileName) {
+	void loadClientMarketingFromFile(String MarketingDataFileName) {
 		InputStreamReader ipsr;
 		BufferedReader br = null;
 		InputStream ips;
 
 		String ligne;
 		System.out.println(
-				"********************************** Dans : loadCatalogueDataFromFile *********************************");
+				"********************************** Dans : loadMarketingDataFromFile *********************************");
 
 		try {
-			ips = new FileInputStream(catalogueDataFileName);
+			ips = new FileInputStream(MarketingDataFileName);
 			ipsr = new InputStreamReader(ips);
 			br = new BufferedReader(ipsr);
 
 			br.readLine(); // On enlève l'entete
 
-			int categorieId = 1;
+			int marketingId = 1;
 			while ((ligne = br.readLine()) != null) {
 
-				ArrayList<String> catalogueRecord = new ArrayList<String>();
+				ArrayList<String> MarketingRecord = new ArrayList<String>();
 				StringTokenizer val = new StringTokenizer(ligne, ",");
 				while (val.hasMoreTokens()) {
-					catalogueRecord.add(val.nextToken().toString());
+					MarketingRecord.add(val.nextToken().toString());
 				}
 
-				String Marque = catalogueRecord.get(0);
-				String NOM = catalogueRecord.get(1);
-				int Puissance = Integer.parseInt(catalogueRecord.get(2));
-				String Longueur = catalogueRecord.get(3);
-				int NbPlaces = Integer.parseInt(catalogueRecord.get(4));
-				int NbPortes = Integer.parseInt(catalogueRecord.get(5));
-				String Couleur = catalogueRecord.get(6);
-				boolean Occasion = Boolean.parseBoolean(catalogueRecord.get(7));
-				int Prix = Integer.parseInt(catalogueRecord.get(8));
+				int age = Integer.valueOf(MarketingRecord.get(0));
+				String sexe = MarketingRecord.get(1);
+				int taux = Integer.valueOf(MarketingRecord.get(2));
+				String situationFamiliale = MarketingRecord.get(3);
+				int nbEnfantsAcharge = Integer.valueOf(MarketingRecord.get(4));
+				boolean voiture2 = Boolean.valueOf(MarketingRecord.get(5));
 
-				System.out.println("Marque = " + Marque + ", " + "NOM = " + NOM + ", " + "Puissance = " + Puissance
-						+ ", " + "Longueur = " + Longueur + ", " + "NbPlaces = " + NbPlaces + ", " + "NbPortes = "
-						+ NbPortes + ", " + "Couleur = " + Couleur + ", " + "Occasion = " + Occasion + ", " + "Prix = "
-						+ Prix + "");
+				System.out.println("age = " + age + ", " + "sexe = " + sexe + ", " + "taux = " + taux
+						+ ", " + "situationFamiliale = " + situationFamiliale + ", " + "nbEnfantsAcharge = "
+						+ nbEnfantsAcharge + ", " + "voiture2 = "
+						+ voiture2);
 				// Ajout du véhicule dans KVStore
-				this.insertACatalogueRow(categorieId, Marque, NOM, Puissance, Longueur, NbPlaces, NbPortes, Couleur, Occasion, Prix);
-				categorieId++;
+				this.insertAMarketingRow(marketingId, age, sexe, taux, situationFamiliale, nbEnfantsAcharge, voiture2);
+				marketingId++;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
