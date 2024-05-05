@@ -16,30 +16,39 @@ Enter password for jdbc:hive2://localhost:10000: ********
 -- Créer les tables externes HIVE pointant vers les tables
 -- équivalentes oracle Nosql
 
--- table externe Hive CATALOGUE
-0: jdbc:hive2://localhost:10000>drop table CATALOGUE;
+-- table externe Hive M2_DMA_Catalogue_EXT
+0: jdbc:hive2://localhost:10000>drop table M2_DMA_Catalogue_EXT;
 
-0: jdbc:hive2://localhost:10000>create external table CATALOGUE (
-  CatalogueId int, 
-  Marque string, 
-  NOM string, 
-  Puissance integer,
-  Longueur string,
-  NbPlaces  integer,
-  NbPortes  integer,
-  Couleur string,
-  Occasion boolean,
-  Prix integer
-)STORED BY 'oracle.kv.hadoop.hive.table.TableStorageHandler'
-TBLPROPERTIES
-("oracle.kv.kvstore" = "kvstore",
-"oracle.kv.hosts" = "localhost:5000", 
-"oracle.kv.hadoop.hosts" = "localhost/127.0.0.1", 
-"oracle.kv.tableName" = "CATALOGUE");
+0: jdbc:hive2://localhost:10000>CREATE EXTERNAL TABLE M2_DMA_Catalogue_EXT (
+    MARQUE string,
+    NOM string,
+    PUISSANCE int,
+    LONGUEUR string,
+    NBPLACES int,
+    NBPORTES int,
+    COULEUR string,
+    OCCASION boolean,
+    PRIX int
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Catalogue' TBLPROPERTIES ("skip.header.line.count" = "1");
+
 
 -- vérifications
 
-0: jdbc:hive2://localhost:10000>select * from CATALOGUE ;
+0: jdbc:hive2://localhost:10000>select * from M2_DMA_Catalogue_EXT limit 10 ;
+--------------------+-------------------------------+--------------------------------+----------------------------+
+| m2_dma_catalogue_ext.marque  | m2_dma_catalogue_ext.nom  | m2_dma_catalogue_ext.puissance  | m2_dma_catalogue_ext.longueur  | m2_dma_catalogue_ext.nbplaces  | m2_dma_catalogue_ext.nbportes  | m2_dma_catalogue_ext.couleur  | m2_dma_catalogue_ext.occasion  | m2_dma_catalogue_ext.prix  |
++------------------------------+---------------------------+---------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+--------------------------------+----------------------------+
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | blanc                         | false                          | 50500                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | noir                          | false                          | 50500                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | rouge                         | false                          | 50500                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | gris                          | true                           | 35350                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | bleu                          | true                           | 35350                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | gris                          | false                          | 50500                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | bleu                          | false                          | 50500                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | rouge                         | true                           | 35350                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | blanc                         | true                           | 35350                      |
+| Volvo                        | S80 T6                    | 272                             | tr�s longue                    | 5                              | 5                              | noir                          | true                           | 35350                      |
++------------------------------+---------------------------+---------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+--------------------------------+----------------------------+
 
 --++ Création table externe *****
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -111,7 +120,7 @@ TBLPROPERTIES ("mongo.uri" = "mongodb://localhost:27017/datatpa.M2_DMA_Immatricu
     TBLPROPERTIES ("mongo.uri" = "mongodb://localhost:27017/datatpa.M2_DMA_Clients");
 
 -- vérification des données
-0: jdbc:hive2://localhost:10000> select * from M2_DMA_Clients limt 3;
+0: jdbc:hive2://localhost:10000> select * from M2_DMA_Clients limit 3;
 -------------------------+-------------------------------+-------------------------------------+
 |   m2_dma_clients_ext.id   | m2_dma_clients_ext.age  | m2_dma_clients_ext.sexe  | m2_dma_clients_ext.taux  | m2_dma_clients_ext.situationfamiliale  | m2_dma_clients_ext.nbenfants  | m2_dma_clients_ext.voiture_2  | m2_dma_clients_ext.immatriculation  |
 +---------------------------+-------------------------+--------------------------+--------------------------+----------------------------------------+-------------------------------+-------------------------------+-------------------------------------+
