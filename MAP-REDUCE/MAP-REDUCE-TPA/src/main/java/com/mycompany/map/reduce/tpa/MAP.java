@@ -59,7 +59,7 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
     
     @Override
     public void cleanup(Context context) throws IOException, InterruptedException {
-        String rep = "Total;/" + this.sommeCO2 + ";/" + this.sommeCout + ";/" + this.sommeBonusMalus + ";/" + this.indice;
+        String rep = "Total;/" + this.sommeBonusMalus + ";/" + this.sommeCout + ";/" + this.sommeCO2 + ";/" + this.indice;
         context.write(new Text("TOTAL"), new Text(rep));
     }
 }
