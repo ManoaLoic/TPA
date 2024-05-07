@@ -49,7 +49,7 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
 
     public static String clearBonusMalus(String val) {
         String noNumerique=val.replaceAll("[^\\d.-]", "");
-        if (noNumerique.equals("") && noNumerique.equals("-")) {
+        if (noNumerique.equals("") || noNumerique.equals("-")) {
             return "0";
         }
         val = val.split("€")[0];
