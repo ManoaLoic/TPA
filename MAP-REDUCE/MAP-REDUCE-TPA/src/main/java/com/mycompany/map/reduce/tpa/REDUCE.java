@@ -29,7 +29,7 @@ public class REDUCE extends Reducer<Text, Text, Text, Text> {
         List<String> listeModeleMarqueCatalogue = new ArrayList<String>();
         while (i.hasNext()) {
             Text valeur = i.next();
-            String[] data = valeur.toString().split(";");
+            String[] data = valeur.toString().split(";/");
             if (data[0].equals("Total")) {
                 if (Double.parseDouble(data[4]) > 0) {
                     totalBonusMalus = Double.parseDouble(data[1]);

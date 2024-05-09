@@ -28,10 +28,10 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
         Configuration conf = context.getConfiguration();
         if (cle.get() > 0) {
             String[] data = valeur.toString().split(",");
-            if (valeur.toString().contains("€")) {
+            if (!valeur.toString().contains("€") || data.length == 9) {
                 marque.set(data[0].toUpperCase());
                 value.set("isCataloque;/" + data[1].toUpperCase() + ";/" + data[2] + ";/" + data[3] + ";/" + data[4] + ";/" + data[5] + ";/" + data[6] + ";/" + data[7] + ";/" + data[8]);
-            } else {
+            } else if(valeur.toString().contains("€") || data.length == 5) {
                 marque.set(data[1].split(" ")[0]);
                 String bonusMalus = clearBonusMalus(data[2]);
                 String co2 = data[3].replaceAll("[^\\d.-]", "");
@@ -42,6 +42,8 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
                 this.sommeCout += Double.parseDouble(coutEnergie);
                 double valBonusMalus = Double.parseDouble(bonusMalus);
                 this.sommeBonusMalus += valBonusMalus;
+            }else{
+                System.out.println("Ligne incorrect!");
             }
             context.write(marque, value);
         }
@@ -53,7 +55,7 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
             return "0";
         }
         val = val.split("€")[0];
-        val = val.replaceAll("\\s+", "");
+        val = val.replaceAll("[^\\d.-]", "");
         return val;
     }
     
