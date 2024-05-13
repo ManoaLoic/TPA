@@ -70,7 +70,7 @@ java -jar $KVHOME/lib/kvstore.jar runadmin -port 5000 -host localhost
 -- Connexion à la base
 kv -> connect store -name kvstore
 -- Vérification des données
-kv -> get table -name marketing
+kv -> get table -name M2_DMA_Marketing
 
 
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -84,7 +84,7 @@ kv -> get table -name marketing
 -- Demarrage de Hadoop HDFS
 [vagrant@oracle-21c-vagrant ~]$start-dfs.sh
 -- Demarrage de Hadoop YARN
- [vagrant@oracle-21c-vagrant ~]$start-yarn.sh 
+ [vagrant@oracle-21c-vagrant ~]$start-yarn.sh
 
 -- ajout de  Catalogue.csv, C02.csv DANS HDFS
 -- Création d'une directorie hadoop

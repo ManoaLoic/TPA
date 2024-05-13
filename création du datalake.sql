@@ -85,13 +85,19 @@ TBLPROPERTIES ("mongo.uri" = "mongodb://localhost:27017/datatpa.M2_DMA_Immatricu
 -- CRÉATION DE LA TABLE EXTERNE POUR  M2_DMA_Marketing
 0: jdbc:hive2://localhost:10000> drop table M2_DMA_Marketing_ext;
 0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE  M2_DMA_Marketing_ext (
+    MARKETINGID int,
     AGE int, 
     SEXE string,
     TAUX int,
     SITUATIONFAMILIALE string,
     NBENFANTSACHARGE int,
     VOITURE2 boolean
-) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Marketing' TBLPROPERTIES ("skip.header.line.count" = "1");
+) STORED BY 'oracle.kv.hadoop.hive.table.TableStorageHandler'
+TBLPROPERTIES (
+"oracle.kv.kvstore" = "kvstore",
+"oracle.kv.hosts" = "localhost:5000", 
+"oracle.kv.hadoop.hosts" = "localhost/127.0.0.1", 
+"oracle.kv.tableName" = "M2_DMA_Marketing");
 
 -- vérification des données
 0: jdbc:hive2://localhost:10000> select * from M2_DMA_Marketing_ext;

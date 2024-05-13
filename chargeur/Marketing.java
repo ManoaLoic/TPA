@@ -37,7 +37,7 @@ public class Marketing {
 	private static final String AUTOMOBILE_FOLDER = "/TPA";
 
 	private final KVStore store;
-	private final String tabMarketing = "MARKETING";
+	private final String tabMarketing = "M2_DMA_Marketing";
 
 	public static void main(String args[]) {
 		try {
