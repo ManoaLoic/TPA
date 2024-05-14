@@ -75,7 +75,7 @@ WITH SERDEPROPERTIES(
 TBLPROPERTIES ("mongo.uri" = "mongodb://localhost:27017/datatpa.M2_DMA_Immatriculations");
 
 -- vérification des données
-0: jdbc:hive2://localhost:10000> select * FROM M2_DMA_Immatriculations_ext;
+0: jdbc:hive2://localhost:10000> select * FROM M2_DMA_Immatriculations_ext LIMIT 10;
     --------------------------------------+---------------------------------------+---------------------------------------+---------------------------------------+--------------------------------------+---------------------------------------+-----------------------------------+
 | m2_dma_immatriculations_ext.idimmatriculation  | m2_dma_immatriculations_ext.immatriculation  | m2_dma_immatriculations_ext.marque  | m2_dma_immatriculations_ext.nom  | m2_dma_immatriculations_ext.puissance  | m2_dma_immatriculations_ext.longueur  | m2_dma_immatriculations_ext.nbplaces  | m2_dma_immatriculations_ext.nbportes  | m2_dma_immatriculations_ext.couleur  | m2_dma_immatriculations_ext.occasion  | m2_dma_immatriculations_ext.prix  |
 +------------------------------------------------+----------------------------------------------+-------------------------------------+----------------------------------+----------------------------------------+---------------------------------------+---------------------------------------+---------------------------------------+--------------------------------------+---------------------------------------+-----------------------------------+
@@ -100,7 +100,7 @@ TBLPROPERTIES (
 "oracle.kv.tableName" = "M2_DMA_Marketing");
 
 -- vérification des données
-0: jdbc:hive2://localhost:10000> select * from M2_DMA_Marketing_ext;
+0: jdbc:hive2://localhost:10000> select * from M2_DMA_Marketing_ext LIMIT 10;
 +---------------------------+----------------------------+----------------------------+------------------------------------------+----------------------------------------+--------------------------------+
 | m2_dma_marketing_ext.age  | m2_dma_marketing_ext.sexe  | m2_dma_marketing_ext.taux  | m2_dma_marketing_ext.situationfamiliale  | m2_dma_marketing_ext.nbenfantsacharge  | m2_dma_marketing_ext.voiture2  |
 +---------------------------+----------------------------+----------------------------+------------------------------------------+----------------------------------------+--------------------------------+
