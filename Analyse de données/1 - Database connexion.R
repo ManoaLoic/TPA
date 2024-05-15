@@ -26,6 +26,8 @@ Immatriculation <- dbGetQuery(conn, "select * from M2_DMA_Immatriculations_ext")
 catalogue <- dbGetQuery(conn, "select * from M2_DMA_Catalogue_ext")
 Marketing  <- dbGetQuery(conn, "select * from M2_DMA_Marketing_ext")
 
+dbDisconnect(conn)
+
 table(catalogue)
 
 # Delete table name in each column
