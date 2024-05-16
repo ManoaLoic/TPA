@@ -33,10 +33,10 @@ dbDisconnect(conn)
 dbDisconnect(conn)
 
 # Delete table name in each column
-names(client) <- gsub("clients_ext\\.", "", names(client))
-names(Immatriculation) <- gsub("immatriculations_ext\\.", "", names(Immatriculation))
-names(catalogue) <- gsub("catalogue_ext\\.", "", names(catalogue))
-names(Marketing) <- gsub("marketing_ext\\.", "", names(Marketing))
+names(client) <- gsub("m2_dma_", "", names(client))
+names(Immatriculation) <- gsub("m2_dma_immatriculations_ext.", "", names(Immatriculation))
+names(catalogue) <- gsub("m2_dma_catalogue_ext.", "", names(catalogue))
+names(Marketing) <- gsub("m2_dma_marketing_ext.", "", names(Marketing))
 
 
 # Verification nom colonne
