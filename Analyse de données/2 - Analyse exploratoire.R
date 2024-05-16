@@ -86,23 +86,28 @@ create_histogram <- function(data, var_name) {
 # Fonction pour effectuer une analyse exploratoire complète
 explore_data <- function(data) {
   # Résumé statistique
-  summary(data)
+  print(summary(data))
   
   # Histogrammes pour les variables numériques
   numeric_vars <- sapply(data, is.numeric)
-  numeric_data <- data[, numeric_vars]
-  apply(numeric_data, 2, function(x) create_histogram(data, names(data)[which(names(data) == names(x))]))
+  numeric_data <- data[, numeric_vars, drop = FALSE]
+  lapply(names(numeric_data), function(var) create_histogram(numeric_data, var))
   
   # Nuages de points pour les paires de variables numériques
-  pairs(numeric_data)
+  if (ncol(numeric_data) > 1) {
+    pairs(numeric_data)
+  }
   
   # Boîtes à moustaches pour les variables numériques
-  boxplot(numeric_data)
-  
+ if (ncol(numeric_data) > 0) {
+    boxplot(numeric_data)
+  }  
   # Tableaux de fréquence pour les variables catégorielles
   categorical_vars <- sapply(data, is.factor)
-  categorical_data <- data[, categorical_vars]
-  lapply(categorical_data, table)
+  categorical_data <- data[, categorical_vars, drop = FALSE]
+  lapply(names(categorical_data), function(var) 
+    print(table(categorical_data[[var]]))
+  )
 }
 
 # Exploration des données du client
