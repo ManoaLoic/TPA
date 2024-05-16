@@ -54,7 +54,7 @@ Enter password for jdbc:hive2://localhost:10000: ********
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 -- CRÉATION DE LA TABLE EXTERNE POUR LA TABLE M2_DMA_Immatriculations
-0: jdbc:hive2://localhost:10000> drop table M2_DMA_Immatriculations_ext
+0: jdbc:hive2://localhost:10000> drop table M2_DMA_Immatriculations_ext;
 0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE M2_DMA_Immatriculations_ext (
     IDIMMATRICULATION string,
     IMMATRICULATION string,
@@ -67,12 +67,7 @@ Enter password for jdbc:hive2://localhost:10000: ********
     COULEUR string,
     OCCASION boolean,
     PRIX int
-)    
-STORED BY "com.mongodb.hadoop.hive.MongoStorageHandler"
-WITH SERDEPROPERTIES(
-    'mongo.columns.mapping'='{"IDIMMATRICULATION":"_id","NBPLACES":"nbPlaces","NBPORTES":"nbPortes"}'
-)
-TBLPROPERTIES ("mongo.uri" = "mongodb://localhost:27017/datatpa.M2_DMA_Immatriculations");
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Immatriculations' TBLPROPERTIES ("skip.header.line.count" = "1");
 
 -- vérification des données
 0: jdbc:hive2://localhost:10000> select * FROM M2_DMA_Immatriculations_ext LIMIT 10;

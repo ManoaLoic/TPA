@@ -10,8 +10,8 @@ jdbc_chemin <- "hive-jdbc-2.1.1-standalone.jar"
 hadoop_chemin <- "hadoop-common-3.3.5.jar"
 drv <- JDBC(driverClass = "org.apache.hive.jdbc.HiveDriver",jdbc_chemin)
 drv <- JDBC(driverClass = "org.apache.hive.jdbc.HiveDriver",hadoop_chemin)
-user <- "vagrant"
-password <- ""
+user <- "oracle"
+password <- "welcome1"
 hiveConnectionUrl <- "jdbc:hive2://localhost:10000"
 
 # Connection to hive
@@ -26,7 +26,9 @@ Immatriculation <- dbGetQuery(conn, "select * from M2_DMA_Immatriculations_ext")
 catalogue <- dbGetQuery(conn, "select * from M2_DMA_Catalogue_ext")
 Marketing  <- dbGetQuery(conn, "select * from M2_DMA_Marketing_ext")
 
-table(catalogue)
+dbDisconnect(conn)
+
+dbDisconnect(conn)
 
 # Delete table name in each column
 names(client) <- gsub("clients_ext\\.", "", names(client))
