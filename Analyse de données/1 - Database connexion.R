@@ -30,6 +30,8 @@ dbDisconnect(conn)
 
 dbDisconnect(conn)
 
+dbDisconnect(conn)
+
 # Delete table name in each column
 names(client) <- gsub("clients_ext\\.", "", names(client))
 names(Immatriculation) <- gsub("immatriculations_ext\\.", "", names(Immatriculation))
