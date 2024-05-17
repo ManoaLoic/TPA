@@ -110,7 +110,7 @@ TBLPROPERTIES (
     SEXE  string,
     TAUX  int,
     SITUATIONFAMILIALE  string,
-    NBENFANTS  int,
+    NBENFANTSACHARGE  int,
     VOITURE_2  string,
     IMMATRICULATION  string
     )
