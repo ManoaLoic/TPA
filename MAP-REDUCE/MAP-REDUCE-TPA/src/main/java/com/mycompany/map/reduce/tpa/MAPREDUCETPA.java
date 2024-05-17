@@ -21,7 +21,7 @@ public class MAPREDUCETPA {
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
         System.out.println("Traitement du fichier CO2 et Catalogue");
         Configuration conf = new Configuration();
-        conf.set("mapred.textoutputformat.separator", ";/");
+        conf.set("mapred.textoutputformat.separator", ",");
         Job job = Job.getInstance(conf, "Traitement du fichier CO2 et Catalogue");
         String[] ourArgs = new GenericOptionsParser(conf, args).getRemainingArgs();
 

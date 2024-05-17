@@ -25,23 +25,21 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
 
     @Override
     protected void map(LongWritable cle, Text valeur, Context context) throws IOException, InterruptedException {
-        Configuration conf = context.getConfiguration();
         if (cle.get() > 0) {
             String[] data = valeur.toString().split(",");
-            if (!valeur.toString().contains("€") || data.length == 9) {
+            if (!valeur.toString().contains("€") && data.length == 9) {
                 marque.set(data[0].toUpperCase());
-                value.set("isCataloque;/" + data[1].toUpperCase() + ";/" + data[2] + ";/" + data[3] + ";/" + data[4] + ";/" + data[5] + ";/" + data[6] + ";/" + data[7] + ";/" + data[8]);
-            } else if(valeur.toString().contains("€") || data.length == 5) {
-                marque.set(data[1].split(" ")[0]);
+                value.set("isCataloque;/" + String.join(";/", data[1].toUpperCase(), data[2], data[3], data[4], data[5], data[6], data[7], data[8]));
+            } else if(valeur.toString().contains("€") && data.length == 5) {
+                marque.set(data[1].split(" ")[0].toUpperCase());
                 String bonusMalus = clearBonusMalus(data[2]);
                 String co2 = data[3].replaceAll("[^\\d.-]", "");
                 String coutEnergie = data[4].replaceAll("[^\\d.-]", "");
-                value.set("isCo2;/" + data[1].split(" ")[1].toUpperCase() + ";/" + bonusMalus + ";/" + co2 + ";/" + coutEnergie);
+                value.set("isCo2;/" + String.join(";/", data[1].split(" ")[1].toUpperCase(), bonusMalus, co2, coutEnergie));
                 this.indice++;
-                this.sommeCO2= Double.parseDouble(co2);
+                this.sommeCO2 += Double.parseDouble(co2);
                 this.sommeCout += Double.parseDouble(coutEnergie);
-                double valBonusMalus = Double.parseDouble(bonusMalus);
-                this.sommeBonusMalus += valBonusMalus;
+                this.sommeBonusMalus += Double.parseDouble(bonusMalus);
             }else{
                 System.out.println("Ligne incorrect!");
             }
@@ -51,17 +49,15 @@ public class MAP extends Mapper<LongWritable, Text, Text, Text> {
 
     public static String clearBonusMalus(String val) {
         String noNumerique=val.replaceAll("[^\\d.-]", "");
-        if (noNumerique.equals("") || noNumerique.equals("-")) {
+        if (noNumerique.isEmpty() || noNumerique.equals("-")) {
             return "0";
         }
-        val = val.split("€")[0];
-        val = val.replaceAll("[^\\d.-]", "");
-        return val;
+        return val.split("€")[0].replaceAll("[^\\d.-]", "");
     }
     
     @Override
     public void cleanup(Context context) throws IOException, InterruptedException {
         String rep = "Total;/" + this.sommeBonusMalus + ";/" + this.sommeCout + ";/" + this.sommeCO2 + ";/" + this.indice;
-        context.write(new Text("TOTAL"), new Text(rep));
+        context.write(new Text("@TOTAL"), new Text(rep));
     }
 }
