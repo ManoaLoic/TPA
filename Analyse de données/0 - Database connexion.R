@@ -34,6 +34,9 @@ names(Immatriculation) <- gsub("m2_dma_immatriculations_ext.", "", names(Immatri
 names(catalogue) <- gsub("m2_dma_catalogue_ext.", "", names(catalogue))
 names(Marketing) <- gsub("m2_dma_marketing_ext.", "", names(Marketing))
 
+# Delete Id column
+client <- client[ , !(names(client) %in% "id")]
+Marketing <- Marketing[ , !(names(Marketing) %in% "marketingid")]
 
 # Verification nom colonne
 names(client)

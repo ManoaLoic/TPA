@@ -1,20 +1,6 @@
-#Verification donnees immatriculation
-nrow(Immatriculation)
-length(unique(Immatriculation$immatriculation))
-#Suppression doublon immatriculation
-doublonImmatriculation = subset(Immatriculation, duplicated(Immatriculation$immatriculation) )
-Immatriculation <- subset(Immatriculation, !Immatriculation$immatriculation %in% doublonImmatriculation$immatriculation)
-nrow(Immatriculation)
-
-#verification donnees client
-str(client) 
-nrow(client)
-#suppression colonne idclient
-client <- client[ , c(-1)]
-
-#correction donnee client
+#Rectification Client
 #sexe
-client[client$sexe == 'Féminin', c('sexe')] <- 'F'
+client[client$sexe == 'F�minin', c('sexe')] <- 'F'
 client[client$sexe == 'Femme', c('sexe')] <- 'F'
 table(client$sexe)
 
@@ -28,16 +14,12 @@ client <- client[client$sexe != 'N/D', ]
 table(client$sexe)
 
 #situationfamiliale
-celibataire <- "Célibataire"
-celibataire <- iconv(celibataire, from = "UTF-8", to = "latin1")
-
-client[client$situationfamiliale == 'Célibataire', c('situationfamiliale')] <- celibataire
-client[client$situationfamiliale == 'Divorcée', c('situationfamiliale')] <- celibataire
-client[client$situationfamiliale == 'Seul', c('situationfamiliale')] <- celibataire
-client[client$situationfamiliale == 'Seule', c('situationfamiliale')] <- celibataire
+client[client$situationfamiliale == 'Divorc�e', c('situationfamiliale')] <- 'C�libataire'
+client[client$situationfamiliale == 'Seul', c('situationfamiliale')] <- 'C�libataire'
+client[client$situationfamiliale == 'Seule', c('situationfamiliale')] <- 'C�libataire'
 table(client$situationfamiliale)
 
-client[client$situationfamiliale == 'Marié(e)', c('situationfamiliale')] <- 'En Couple'
+client[client$situationfamiliale == 'Mari�(e)', c('situationfamiliale')] <- 'En Couple'
 table(client$situationfamiliale)
 
 client[client$situationfamiliale == '', c('situationfamiliale')] <- 'N/D'
@@ -58,9 +40,9 @@ client <- client[client$nbenfantsacharge != -1, ]
 table(client$nbenfantsacharge)
 
 #voiture2
-client <- client[client$voiture2 != '', ]
-client <- client[client$voiture2 != '?', ]
-table(client$voiture2)
+client <- client[client$voiture_2 != '', ]
+client <- client[client$voiture_2 != '?', ]
+table(client$voiture_2)
 
 #taux
 #-1,   " " , ?
@@ -69,10 +51,18 @@ client <- client[client$taux != '?', ]
 client <- client[client$taux != -1, ]
 table(client$taux)
 
-#immatriculation
+
+#Immatriculation
+#Suppression doublon de ligne
+Immatriculation <- Immatriculation[!duplicated(Immatriculation), ]
+nrow(Immatriculation)
+
+
+
+
 #Suppression doublon immatriculation
-length(unique(client$immatriculation))
-doublonClientImmatriculation = subset(client, duplicated(client$immatriculation) )
-client <- subset(client, !client$immatriculation %in% doublonClientImmatriculation$immatriculation)
-str(client)
-#View(client)  
+# length(unique(client$immatriculation))
+# doublonClientImmatriculation = subset(client, duplicated(client$immatriculation) )
+# client <- subset(client, !client$immatriculation %in% doublonClientImmatriculation$immatriculation)
+# str(client)
+# #View(client)  

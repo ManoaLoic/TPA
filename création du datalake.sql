@@ -56,7 +56,6 @@ Enter password for jdbc:hive2://localhost:10000: ********
 -- CRÉATION DE LA TABLE EXTERNE POUR LA TABLE M2_DMA_Immatriculations
 0: jdbc:hive2://localhost:10000> drop table M2_DMA_Immatriculations_ext;
 0: jdbc:hive2://localhost:10000> CREATE EXTERNAL TABLE M2_DMA_Immatriculations_ext (
-    IDIMMATRICULATION string,
     IMMATRICULATION string,
     MARQUE string,
     NOM string,
