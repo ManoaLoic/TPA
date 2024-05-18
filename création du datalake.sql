@@ -28,8 +28,11 @@ Enter password for jdbc:hive2://localhost:10000: ********
     NBPORTES int,
     COULEUR string,
     OCCASION boolean,
-    PRIX int
-) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Catalogue' TBLPROPERTIES ("skip.header.line.count" = "1");
+    PRIX int,
+    co2 double,
+    bonusmalus double,
+    coutEnergie double
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_New_Catalogue';
 
 
 -- vérifications
