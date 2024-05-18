@@ -27,8 +27,8 @@ summary(dmatrix)
 # CLUSTERING PAR PARTITIONNEMENT  #
 #---------------------------------#
 
-# K-means pour K = 4
-km4 <- kmeans(dmatrix, 4)
+# Split pour 5 catégories
+km4 <- kmeans(dmatrix, 5)
 
 # Ajout de la colonne du numero de cluster
 data_km4 <- data.frame(data)
@@ -41,14 +41,16 @@ cluster1 <- data_km4[data_km4$Cluster == 1,]
 cluster2 <- data_km4[data_km4$Cluster == 2,]
 cluster3 <- data_km4[data_km4$Cluster == 3,]
 cluster4 <- data_km4[data_km4$Cluster == 4,]
+cluster5 <- data_km4[data_km4$Cluster == 5,]
 
 ###############################################
-#View(cluster1) 
+#View(cluster1)
+table(cluster1)
 table(cluster1$puissance) 
 table(cluster1$nbplaces)  
 table(cluster1$nbportes)
 table(cluster1$longueur)
-table(cluster1$prix) 
+table(cluster1$prix)
 nrow(cluster1)
 str(cluster1)#Compacte
 ###############################################
