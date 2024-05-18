@@ -19,5 +19,5 @@ nohup java -Xmx64m -Xms64m -jar $KVHOME/lib/kvstore.jar kvlite -secure-config di
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 --++ Démarrage Hive
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-nohup hive --service metastore > /dev/null &
-nohup hiveserver2 > /dev/null &
+nohup hive --service metastore > hive.log &
+nohup hiveserver2 > hiveServer.log &
