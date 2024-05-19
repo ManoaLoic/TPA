@@ -7,5 +7,8 @@ immatriculations_categorisees <- immatriculations_categorisees[, c("immatriculat
 # Renommer les colonnes pour correspondre à la table d'immatriculations
 colnames(immatriculations_categorisees) <- c("immatriculation", "marque", "nom", "puissance", "longueur", "nbplaces", "nbportes", "couleur", "occasion", "prix", "categorie")
 
+# Vérification de la structure du dataframe
+str(immatriculations_categorisees)
+
 # Sauvegarde résultat dans un fichier CSV
 write.csv(immatriculations_categorisees, "immatriculations_categorisees.csv", row.names = FALSE)
