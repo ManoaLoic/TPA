@@ -50,7 +50,7 @@ print(resume_clusters)
 
 # Attribution des noms de catégories en fonction des caractéristiques analysées
 data_clustered$categorie <- ifelse(data_clustered$Cluster == 1, "Citadine", "Autres")
-data_clustered[data_clustered$Cluster == 2, "categorie"] <- "Routière"
+data_clustered[data_clustered$Cluster == 2, "categorie"] <- "Routiere"
 data_clustered[data_clustered$Cluster == 3, "categorie"] <- "Sportive"
 data_clustered[data_clustered$Cluster == 4, "categorie"] <- "Familiale"
 data_clustered[data_clustered$Cluster == 5, "categorie"] <- "SUV"
