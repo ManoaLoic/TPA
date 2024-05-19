@@ -2,7 +2,7 @@ install.packages("cluster")
 library(cluster)
 
 #Liste colonne pour catégorisation
-data <- catalogue[, c("puissance", "longueur", "nbplaces", "nbportes", "prix")]
+data <- catalogue[, c("puissance", "longueur", "nbplaces", "nbportes", "prix", "co2", "bonusmalus", "coutenergie")]
 #View(data)
 
 # Modification du type de la variable en factor
@@ -28,7 +28,7 @@ summary(dmatrix)
 #---------------------------------#
 
 # Split pour 5 catégories
-km4 <- kmeans(dmatrix, 5)
+km4 <- kmeans(dmatrix, 4)
 
 # Ajout de la colonne du numero de cluster
 data_km4 <- data.frame(data)
@@ -41,7 +41,6 @@ cluster1 <- data_km4[data_km4$Cluster == 1,]
 cluster2 <- data_km4[data_km4$Cluster == 2,]
 cluster3 <- data_km4[data_km4$Cluster == 3,]
 cluster4 <- data_km4[data_km4$Cluster == 4,]
-cluster5 <- data_km4[data_km4$Cluster == 5,]
 
 ###############################################
 #View(cluster1)
@@ -102,4 +101,4 @@ data_km4 <- subset(data_km4, select = -Cluster)
 #affectation resultat dans datacategorie
 dataCategorie <- data_km4
 str(dataCategorie)
-View(dataCategorie)
+#View(dataCategorie)
