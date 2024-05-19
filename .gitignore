@@ -2,3 +2,5 @@ Immatriculations.csv
 .RData
 .Rhistory
 /MAP-REDUCE/MAP-REDUCE-TPA/target/
+clients_immatriculations.csv
+immatriculations_categorisees.csv
