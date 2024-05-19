@@ -1,5 +1,0 @@
-immatrCatalog <- merge(x = Immatriculation, by = c( "puissance", "longueur", "nbplaces", "nbportes", "prix"), y = dataCategorie )
-nrow(immatrCatalog)
-immatrCatalog <- unique(immatrCatalog)
-str(immatrCatalog)
-nrow(immatrCatalog)

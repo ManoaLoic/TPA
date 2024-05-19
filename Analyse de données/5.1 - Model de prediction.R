@@ -7,38 +7,38 @@ library(C50)
 library(tree)
 
 #Suppression variables inutiles pour prédiction Marketing
-newClients <- newClients[ , !(names(newClients) %in% "immatriculation")]
-newClients <- newClients[ , !(names(newClients) %in% "puissance")]
-newClients <- newClients[ , !(names(newClients) %in% "longueur")]
-newClients <- newClients[ , !(names(newClients) %in% "nbplaces")]
-newClients <- newClients[ , !(names(newClients) %in% "nbportes")]
-newClients <- newClients[ , !(names(newClients) %in% "prix")]
-newClients <- newClients[ , !(names(newClients) %in% "marque")]
-newClients <- newClients[ , !(names(newClients) %in% "nom")]
-newClients <- newClients[ , !(names(newClients) %in% "couleur")]
-newClients <- newClients[ , !(names(newClients) %in% "occasion")]
-newClients <- newClients[ , !(names(newClients) %in% "co2")]
-newClients <- newClients[ , !(names(newClients) %in% "bonusmalus")]
-newClients <- newClients[ , !(names(newClients) %in% "coutenergie")]
-str(newClients)
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "immatriculation")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "puissance")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "longueur")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "nbplaces")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "nbportes")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "prix")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "marque")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "nom")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "couleur")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "occasion")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "co2")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "bonusmalus")]
+clients_immatriculations <- clients_immatriculations[ , !(names(clients_immatriculations) %in% "coutenergie")]
+str(clients_immatriculations)
 
 #Modification des données pour conformer aux normes imposées par les modèles
-newClients[newClients$categorie == 'Coupé', c('categorie')] <- 'Coupe'
-newClients[newClients$situationfamiliale == 'Célibataire', c('situationfamiliale')] <- 'Celibataire'
+clients_immatriculations[clients_immatriculations$categorie == 'Coupé', c('categorie')] <- 'Coupe'
+clients_immatriculations[clients_immatriculations$situationfamiliale == 'Célibataire', c('situationfamiliale')] <- 'Celibataire'
 
-newClients$sexe <- as.factor(newClients$sexe)
-newClients$situationfamiliale <- as.factor(newClients$situationfamiliale)
-newClients$voiture_2 <- as.factor(newClients$voiture_2)
-newClients$categorie <- as.factor(newClients$categorie)
+clients_immatriculations$sexe <- as.factor(clients_immatriculations$sexe)
+clients_immatriculations$situationfamiliale <- as.factor(clients_immatriculations$situationfamiliale)
+clients_immatriculations$voiture_2 <- as.factor(clients_immatriculations$voiture_2)
+clients_immatriculations$categorie <- as.factor(clients_immatriculations$categorie)
 
-table(newClients$situationfamiliale)
-str(newClients)
+table(clients_immatriculations$situationfamiliale)
+str(clients_immatriculations)
 
 # Création des données d'apprentissage et des données de test
-nrow(newClients)
-#197335 || 80/20 || Test: 39467 et test 157868
-test_data <- newClients[1:39467, ]
-training_data <- newClients[39468:157868, ]
+nrow(clients_immatriculations)
+#197843 || 80/20 || Test: 39569 et test 158275
+test_data <- clients_immatriculations[1:39569, ]
+training_data <- clients_immatriculations[39570:158275, ]
 
 
 
@@ -58,8 +58,8 @@ text(rpartinfo, pretty = 0)
 
 #################
 test_rpartAuto <- predict(rpartAuto, test_data, type="class")
-test_rpartAuto <- nrow(test_data[test_data$categorie==test_rp1,])/nrow(test_data)
-test_rpartAuto
+taux_rpartAuto <- nrow(test_data[test_data$categorie==test_rpartAuto,])/nrow(test_data)
+taux_rpartAuto
 
 test_rpartgini <- predict(rpartgini, test_data, type="class")
 taux_rpartgini <- nrow(test_data[test_data$categorie==test_rpartgini,])/nrow(test_data)
@@ -85,7 +85,7 @@ tree_tr1 <- tree(categorie~., training_data, split = "deviance", control = tree.
 plot(tree_tr1)
 text(tree_tr1, pretty = 0)
 
-tree_tr3 <- tree(categorie~., training_data, split = "gini", control = tree.control(nrow(training_data),mincut=1000))
+tree_tr3 <- tree(categorie~., training_data, split = "gini", control = tree.control(nrow(training_data),mincut=2000))
 plot(tree_tr3)
 text(tree_tr3, pretty = 0)
 
@@ -98,7 +98,3 @@ taux_succes3
 test_tree_tr1 <- predict(tree_tr1, test_data, type="class")
 taux_succes_tr2 <- nrow(test_data[test_data$categorie==test_tree_tr1,])/nrow(test_data)
 taux_succes_tr2
-
-test_tree_tr3 <- predict(tree_tr3, test_data, type="class")
-taux_succes_tr3 <- nrow(test_data[test_data$categorie==test_tree_tr3,])/nrow(test_data)
-taux_succes_tr3
