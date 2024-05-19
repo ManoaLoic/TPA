@@ -28,8 +28,11 @@ Enter password for jdbc:hive2://localhost:10000: ********
     NBPORTES int,
     COULEUR string,
     OCCASION boolean,
-    PRIX int
-) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Catalogue' TBLPROPERTIES ("skip.header.line.count" = "1");
+    PRIX int,
+    co2 double,
+    bonusmalus double,
+    coutEnergie double
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_New_Catalogue';
 
 
 -- vérifications
@@ -131,3 +134,27 @@ TBLPROPERTIES (
 
 
 
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--++ Création table interne
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-- Table pour stocker les models de prédiction Marketing
+0: jdbc:hive2://localhost:10000> CREATE SEQUENCE model_storage_seq;
+0: jdbc:hive2://localhost:10000> drop table model_storage;
+0: jdbc:hive2://localhost:10000> CREATE TABLE model_storage (
+  id INT,
+  model_type STRING,
+  model STRING
+);
+
+-- Résultats des prédictions Marketing
+0: jdbc:hive2://localhost:10000> drop table MARKETING_PREDICT_RESULT;
+0: jdbc:hive2://localhost:10000> CREATE TABLE  MARKETING_PREDICT_RESULT (
+    id int,
+    AGE int, 
+    SEXE string,
+    TAUX int,
+    SITUATIONFAMILIALE string,
+    NBENFANTSACHARGE int,
+    VOITURE2 boolean,
+    Categorie string
+);

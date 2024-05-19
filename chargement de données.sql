@@ -76,3 +76,9 @@ kv -> get table -name M2_DMA_Marketing
 [vagrant@oracle-21c-vagrant ~]$ hdfs dfs -ls /CO2
 -rw-r--r--   1 vagrant supergroup      38916 2024-04-26 21:03 /CO2/CO2.csv
 
+-- ***************************************************************************
+-- Après MAP REDUCE
+-- ***************************************************************************
+[vagrant@oracle-21c-vagrant ~]$ hdfs dfs -mkdir /M2_DMA_New_Catalogue
+[vagrant@oracle-21c-vagrant ~]$ hdfs dfs -put $MYTPHOME/../MAP-REDUCE/newCatalogue.csv /M2_DMA_New_Catalogue
+[vagrant@oracle-21c-vagrant ~]$ hdfs dfs -ls /M2_DMA_New_Catalogue

@@ -17,6 +17,7 @@ table(client$sexe)
 client[client$situationfamiliale == 'Divorc�e', c('situationfamiliale')] <- 'C�libataire'
 client[client$situationfamiliale == 'Seul', c('situationfamiliale')] <- 'C�libataire'
 client[client$situationfamiliale == 'Seule', c('situationfamiliale')] <- 'C�libataire'
+client[client$situationfamiliale == 'C�libataire', c('situationfamiliale')] <- 'Celibataire'
 table(client$situationfamiliale)
 
 client[client$situationfamiliale == 'Mari�(e)', c('situationfamiliale')] <- 'En Couple'
@@ -55,14 +56,10 @@ table(client$taux)
 #Immatriculation
 #Suppression doublon de ligne
 Immatriculation <- Immatriculation[!duplicated(Immatriculation), ]
+Immatriculation <- unique(Immatriculation, by = "immatriculation")
 nrow(Immatriculation)
 
 
-
-
-#Suppression doublon immatriculation
-# length(unique(client$immatriculation))
-# doublonClientImmatriculation = subset(client, duplicated(client$immatriculation) )
-# client <- subset(client, !client$immatriculation %in% doublonClientImmatriculation$immatriculation)
-# str(client)
-# #View(client)  
+# Marketing
+names(Marketing)[names(Marketing) == "voiture2"] <- "voiture_2"
+Marketing[Marketing$situationfamiliale == 'C�libataire', c('situationfamiliale')] <- 'Celibataire'
