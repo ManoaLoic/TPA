@@ -29,8 +29,8 @@ Enter password for jdbc:hive2://localhost:10000: ********
     COULEUR string,
     OCCASION boolean,
     PRIX int,
-    co2 double,
     bonusmalus double,
+    co2 double,
     coutEnergie double
 ) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_New_Catalogue';
 
