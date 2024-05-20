@@ -1,5 +1,5 @@
 # Fusionner les données des clients avec les données des immatriculations catégorisées
-clients_immatriculations <- merge(client, immatriculations_categorisees, by = "immatriculation", all.x = TRUE)
+clients_immatriculations <- merge(client, immatriculations_categorisees, by = "immatriculation")
 
 # Afficher la structure des données fusionnées
 str(clients_immatriculations)

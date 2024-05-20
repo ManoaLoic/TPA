@@ -7,8 +7,7 @@ setDT(dataCategorie)
 # Fusion  données d'immatriculations avec le modèle de catégorisation
 Immatriculation[, marque := toupper(marque)]
 Immatriculation[, nom := toupper(nom)]
-immatriculations_categorisees <- merge(Immatriculation, dataCategorie, by = c("nom", "couleur", "puissance", "longueur", "nbplaces", "nbportes", "prix", "marque", "occasion"), all = TRUE)
-immatriculations_categorisees <- unique(immatriculations_categorisees, by = "immatriculation")
+immatriculations_categorisees <- merge(Immatriculation, dataCategorie, by = c("nom", "couleur", "puissance", "longueur", "nbplaces", "nbportes", "prix", "marque", "occasion"), all.x = TRUE, all.y = FALSE)
 
 # Vérification de la structure du dataframe
 str(immatriculations_categorisees)

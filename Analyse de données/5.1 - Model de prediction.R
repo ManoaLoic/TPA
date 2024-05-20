@@ -73,6 +73,7 @@ taux_rpartinfo
 
 # Model à partir de C5.0
 c5 <- C5.0(categorie~., training_data)
+# plot(c5)
 test_tree2 <- predict(c5, test_data, type="class")
 test_data$Tree2 <- test_tree2
 taux_succes2 <- nrow(test_data[test_data$categorie==test_data$Tree2,])/nrow(test_data)

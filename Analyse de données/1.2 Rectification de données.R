@@ -52,6 +52,7 @@ client <- client[client$taux != '?', ]
 client <- client[client$taux != -1, ]
 table(client$taux)
 
+client <- na.omit(client)
 
 #Immatriculation
 #Suppression doublon de ligne
