@@ -36,7 +36,10 @@ View(Marketing)
 sql <- "INSERT INTO MARKETING_PREDICT_RESULT VALUES "
 next_id <- getNextId(conn, "MARKETING_PREDICT_RESULT")
 for (i in 1:nrow(Marketing)) {
-  values <- sprintf("(%d, %d, '%s', %d, '%s', %d, '%s', '%s'),", next_id, Marketing$age[i], Marketing$sexe[i], Marketing$taux[i], Marketing$situationfamiliale[i], Marketing$nbenfantsacharge[i], Marketing$voiture_2[i], Marketing$categorie[i])
+  values <- sprintf("(%d, %d, '%s', %d, '%s', %d, '%s', '%s'),", next_id, 
+                    Marketing$age[i], Marketing$sexe[i], Marketing$taux[i], 
+                    Marketing$situationfamiliale[i], Marketing$nbenfantsacharge[i], 
+                    Marketing$voiture_2[i], Marketing$categorie[i])
   sql <- paste(sql, values)
   next_id <- next_id + 1
 }
