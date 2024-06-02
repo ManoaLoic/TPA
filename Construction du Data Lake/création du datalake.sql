@@ -28,11 +28,8 @@ Enter password for jdbc:hive2://localhost:10000: ********
     NBPORTES int,
     COULEUR string,
     OCCASION boolean,
-    PRIX int,
-    bonusmalus double,
-    co2 double,
-    coutEnergie double
-) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_New_Catalogue';
+    PRIX int
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Catalogue';
 
 
 -- vérifications
@@ -72,7 +69,7 @@ Enter password for jdbc:hive2://localhost:10000: ********
 ) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Immatriculations' TBLPROPERTIES ("skip.header.line.count" = "1");
 
 -- vérification des données
-0: jdbc:hive2://localhost:10000> select * FROM M2_DMA_Immatriculations_ext LIMIT 10;
+0: jdbc:hive2://localhost:10000> select * FROM M2_DMA_Immatriculations_ext LIMIT 1;
     --------------------------------------+---------------------------------------+---------------------------------------+---------------------------------------+--------------------------------------+---------------------------------------+-----------------------------------+
 | m2_dma_immatriculations_ext.idimmatriculation  | m2_dma_immatriculations_ext.immatriculation  | m2_dma_immatriculations_ext.marque  | m2_dma_immatriculations_ext.nom  | m2_dma_immatriculations_ext.puissance  | m2_dma_immatriculations_ext.longueur  | m2_dma_immatriculations_ext.nbplaces  | m2_dma_immatriculations_ext.nbportes  | m2_dma_immatriculations_ext.couleur  | m2_dma_immatriculations_ext.occasion  | m2_dma_immatriculations_ext.prix  |
 +------------------------------------------------+----------------------------------------------+-------------------------------------+----------------------------------+----------------------------------------+---------------------------------------+---------------------------------------+---------------------------------------+--------------------------------------+---------------------------------------+-----------------------------------+
@@ -97,12 +94,13 @@ TBLPROPERTIES (
 "oracle.kv.tableName" = "M2_DMA_Marketing");
 
 -- vérification des données
-0: jdbc:hive2://localhost:10000> select * from M2_DMA_Marketing_ext LIMIT 10;
+0: jdbc:hive2://localhost:10000> select * from M2_DMA_Marketing_ext LIMIT 1;
 +---------------------------+----------------------------+----------------------------+------------------------------------------+----------------------------------------+--------------------------------+
 | m2_dma_marketing_ext.age  | m2_dma_marketing_ext.sexe  | m2_dma_marketing_ext.taux  | m2_dma_marketing_ext.situationfamiliale  | m2_dma_marketing_ext.nbenfantsacharge  | m2_dma_marketing_ext.voiture2  |
 +---------------------------+----------------------------+----------------------------+------------------------------------------+----------------------------------------+--------------------------------+
 | 21                        | F                          | 1396                       | C�libataire                              | 0                                      | false                          |
 +---------------------------+----------------------------+----------------------------+------------------------------------------+----------------------------------------+-
+
 
 -- CRÉATION DE LA TABLE EXTERNE POUR LA TABLE M2_DMA_Clients
 0: jdbc:hive2://localhost:10000> drop table M2_DMA_Clients_ext;
@@ -138,7 +136,6 @@ TBLPROPERTIES (
 --++ Création table interne
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- Table pour stocker les models de prédiction Marketing
-0: jdbc:hive2://localhost:10000> CREATE SEQUENCE model_storage_seq;
 0: jdbc:hive2://localhost:10000> drop table model_storage;
 0: jdbc:hive2://localhost:10000> CREATE TABLE model_storage (
   id INT,
@@ -158,3 +155,39 @@ TBLPROPERTIES (
     VOITURE2 boolean,
     Categorie string
 );
+
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+--++ Après map reduce
+--++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-- Modification de la table externe M2_DMA_Catalogue_EXT
+0: jdbc:hive2://localhost:10000>drop table M2_DMA_Catalogue_EXT;
+0: jdbc:hive2://localhost:10000>CREATE EXTERNAL TABLE M2_DMA_Catalogue_EXT (
+    MARQUE string,
+    NOM string,
+    PUISSANCE int,
+    LONGUEUR string,
+    NBPLACES int,
+    NBPORTES int,
+    COULEUR string,
+    OCCASION boolean,
+    PRIX int, 
+    bonusmalus double, 
+    co2 double, 
+    coutEnergie double 
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_New_Catalogue/newCatalogue';
+-- vérifications
+0: jdbc:hive2://localhost:10000>select * from M2_DMA_Catalogue_EXT limit 10 ;
++------------------------------+---------------------------+---------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+--------------------------------+----------------------------+----------------------------------+---------------------------+-----------------------------------+
+| m2_dma_catalogue_ext.marque  | m2_dma_catalogue_ext.nom  | m2_dma_catalogue_ext.puissance  | m2_dma_catalogue_ext.longueur  | m2_dma_catalogue_ext.nbplaces  | m2_dma_catalogue_ext.nbportes  | m2_dma_catalogue_ext.couleur  | m2_dma_catalogue_ext.occasion  | m2_dma_catalogue_ext.prix  | m2_dma_catalogue_ext.bonusmalus  | m2_dma_catalogue_ext.co2  | m2_dma_catalogue_ext.coutenergie  |
++------------------------------+---------------------------+---------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+--------------------------------+----------------------------+----------------------------------+---------------------------+-----------------------------------+
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | blanc                         | true                           | 12817                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | blanc                         | false                          | 18310                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | rouge                         | false                          | 18310                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | noir                          | false                          | 18310                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | gris                          | true                           | 12817                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | bleu                          | true                           | 12817                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | gris                          | false                          | 18310                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | bleu                          | false                          | 18310                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | rouge                         | true                           | 12817                      | -2400.0                          | 26.1                      | 191.6                             |
+| AUDI                         | A2 1.4                    | 75                              | courte                         | 5                              | 5                              | noir                          | true                           | 12817                      | -2400.0                          | 26.1                      | 191.6                             |
++------------------------------+---------------------------+---------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+--------------------------------+----------------------------+----------------------------------+---------------------------+-----------------------------------+
