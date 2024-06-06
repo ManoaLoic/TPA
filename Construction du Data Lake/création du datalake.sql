@@ -29,7 +29,7 @@ Enter password for jdbc:hive2://localhost:10000: ********
     COULEUR string,
     OCCASION boolean,
     PRIX int
-) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Catalogue';
+) ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' STORED AS TEXTFILE LOCATION 'hdfs:/M2_DMA_Catalogue' TBLPROPERTIES ("skip.header.line.count" = "1");
 
 
 -- vérifications
