@@ -33,9 +33,9 @@ MYTPHOME=/vagrant/TPA/data
 --++ Chargement dans Oracle NoSQL
 --++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 -- Création de la variable d'environnement du projet A CHANGER PAR RAPPORT AU VOTRE
-export MYTPHOME=/vagrant/TPA
+export MYTPHOME=/vagrant/TPA/Construction-du-Data-Lake
 -- Compilation de la classe chargeur
-javac -g -cp $KVHOME/lib/kvclient.jar:$MYTPHOME $MYTPHOME/Construction-du-Data-Lake/chargeur/Marketing.java
+javac -g -cp $KVHOME/lib/kvclient.jar:$MYTPHOME $MYTPHOME/chargeur/Marketing.java
 -- Execution de l'import
 java -Xmx256m -Xms256m  -cp $KVHOME/lib/kvclient.jar:$MYTPHOME chargeur.Marketing
 -- Accéder kvStore

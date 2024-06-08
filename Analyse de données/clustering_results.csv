@@ -1,4 +1,4 @@
-"marque","nom","puissance","longueur","nbplaces","nbportes","couleur","occasion","prix","co2","bonusmalus","coutenergie","categorie"
+"marque","nom","puissance","longueur","nbplaces","nbportes","couleur","occasion","prix","bonusmalus","co2","coutenergie","categorie"
 "AUDI","A2 1.4",75,"courte",5,5,"blanc","true",12817,-2400,26.1,191.6,"Routiere"
 "AUDI","A2 1.4",75,"courte",5,5,"blanc","false",18310,-2400,26.1,191.6,"Routiere"
 "AUDI","A2 1.4",75,"courte",5,5,"rouge","false",18310,-2400,26.1,191.6,"Routiere"

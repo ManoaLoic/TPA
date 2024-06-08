@@ -21,8 +21,8 @@ MYTPHOME=/vagrant/TPA/data
     admin    0.000GB
     datatpa  0.133GB
     local    0.000GB
--- vérification des données
 > use datatpa
+-- vérification des données
     switched to db datatpa
 > show collections
     M2_DMA_Immatriculations

@@ -37,9 +37,8 @@ str(clients_immatriculations)
 
 # Création des données d'apprentissage et des données de test
 nrow(clients_immatriculations)
-#196677 || 80/20 || Test: 39336 et apprentissage 157341
-test_data <- clients_immatriculations[1:39336, ]
-training_data <- clients_immatriculations[39337:196677, ]
+test_data <- clients_immatriculations[1:39467, ]
+training_data <- clients_immatriculations[39468:197335, ]
 
 
 
